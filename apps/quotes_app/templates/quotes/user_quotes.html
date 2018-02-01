@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quotes</title>
+</head>
+<body>
+	<p><a href="/quotes">Dashboard</a> | <a href="/logout">Logout</a></p>
+	<h4>Posts by {{user.name}}</h4>
+	<h4>Count: {{my_quotes.count}}</h4>
+
+	{%for x in my_quotes%}
+	<p>{{ x.quote_by }}: {{ x.quote }}</p>
+	{%endfor%}
+</body>
+</html>

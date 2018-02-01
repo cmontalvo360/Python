@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quotes</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	<a href="/logout">Logout</a>
+	<h2>Welcome, {{ request.session.name }}!</h2>
+
+	<h3>Quotable Quotes</h3>
+	{%for x in all_quotes%}
+	<div>
+		<p>{{x.quote_by}}: {{x.quote}} </p>
+		<p>posted by <a href="/users/{{x.submitted_by.id}}">{{x.submitted_by.name}}</a> 
+			<form action="/user/favorites" method="POST">
+					{% csrf_token%}
+					<input type="hidden" name="favorites" value="{{x.id}}">
+					<input type="submit" value="Add to My List">
+				</form>
+		</p>
+	</dir>
+	{%endfor%}
+	<divc class="favs">
+		<h3>Your Favorites</h3>
+		{%for x in fav_quotes%}
+		<div>
+		<p>{{x.quote_by}}: {{x.quote}} </p>
+		<p>posted by <a href="/users/{{x.submitted_by.id}}">{{x.submitted_by.name}}</a> 
+			<form action="/user/favorites/remove" method="POST">
+					{% csrf_token%}
+					<input type="hidden" name="remove" value="{{x.id}}">
+					<input type="submit" value="Remove From My List">
+				</form>
+		</p>
+		</dir>
+		{%endfor%}
+	</div>
+
+	<div>
+		<h4>Contribute a Quote:</h4>
+		<form action="user/submit" method="POST">
+		{% csrf_token %}
+		<p>Quoted By: <input type="text" name="quote_by"></p>
+		<p>Message: <input type="text" name="message"></p>
+		<p><input value='Submit' type="submit" name="submit"></p>
+		</form>
+	</div>
+</body>
+</html>
